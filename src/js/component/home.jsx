@@ -1,24 +1,89 @@
-import React from "react";
+import React, { useState } from "react";
+import { Button, InputGroup, FormControl, Form } from "react-bootstrap";
 
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
+//Imports components
+import TodoList from "./TodoList.jsx";
 
 //create your first component
 const Home = () => {
+	const [listTodo, setLisTodo] = useState([]);
+	const [newTodo, setNewTodo] = useState("");
+
+	console.log({ newTodo });
+
+	const handelClick = () => {
+		const newListTodo = [...listTodo, newTodo];
+		setLisTodo(newListTodo);
+	};
+
+	console.log({ listTodo });
+
+	const deleteTodo = (id) => {
+		console.log(id);
+	};
+
 	return (
-		<div>
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
+		<div className="card container d-flex justify-content-center col-6">
+			<div className="card-body row">
+				<div className="col-12 d-flex justify-content-center">
+					<h5 className="card-title">TO DO LIST</h5>
+				</div>
+				<div className="col-12 d-flex justify-content-center">
+					<p className="card-text row">
+						Add the tasks to create your list
+					</p>
+				</div>
+				<InputGroup
+					id="new-todo"
+					onChange={(e) => setNewTodo(e.target.value)}
+					size="lg">
+					<FormControl
+						aria-label="Large"
+						aria-describedby="inputGroup-sizing-sm"
+					/>
+				</InputGroup>
+				<Form>
+					<Form>
+						<Form.Check
+							type="switch"
+							id="important-switch"
+							label="Important"
+						/>
+						<Form.Check
+							type="switch"
+							id="urgent-switch"
+							label="Urgent"
+						/>
+					</Form>
+				</Form>
+
+				<div className="d-flex justify-content-center my-2">
+					<Button
+						onClick={handelClick}
+						className="col-4"
+						variant="primary">
+						New Task
+					</Button>{" "}
+				</div>
+
+				{listTodo.map((todo, index) => (
+					<TodoList
+						key={index}
+						delete={deleteTodo}
+						id={index}
+						todo={todo}
+					/>
+				))}
+			</div>
+
+			<div className="card-body">
+				<a href="#" className="card-link">
+					Card link
+				</a>
+				<a href="#" className="card-link">
+					Another link
+				</a>
+			</div>
 		</div>
 	);
 };
