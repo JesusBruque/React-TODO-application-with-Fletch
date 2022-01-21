@@ -8,6 +8,16 @@ import TodoList from "./TodoList.jsx";
 const Home = () => {
 	const [listTodo, setLisTodo] = useState([]);
 	const [newTodo, setNewTodo] = useState("");
+	const [radio, setRadio] = useState({
+		important: false,
+		urgent: false,
+	});
+
+	console.log({ listTodo });
+
+	const deleteTodo = (id) => {
+		console.log(id);
+	};
 
 	console.log({ newTodo });
 
@@ -16,10 +26,11 @@ const Home = () => {
 		setLisTodo(newListTodo);
 	};
 
-	console.log({ listTodo });
+	console.log({ radio });
 
-	const deleteTodo = (id) => {
-		console.log(id);
+	const important = (e) => {
+		const changeCheck = e.target.checked;
+		setRadio(changeCheck);
 	};
 
 	return (
@@ -42,20 +53,6 @@ const Home = () => {
 						aria-describedby="inputGroup-sizing-sm"
 					/>
 				</InputGroup>
-				<Form>
-					<Form>
-						<Form.Check
-							type="switch"
-							id="important-switch"
-							label="Important"
-						/>
-						<Form.Check
-							type="switch"
-							id="urgent-switch"
-							label="Urgent"
-						/>
-					</Form>
-				</Form>
 
 				<div className="d-flex justify-content-center my-2">
 					<Button
@@ -65,6 +62,23 @@ const Home = () => {
 						New Task
 					</Button>{" "}
 				</div>
+				<Form>
+					<div className="mb-3">
+						<Form.Check
+							inline
+							onChange={important}
+							type={"radio"}
+							id={`important`}
+							label={`Important`}
+						/>
+						<Form.Check
+							inline
+							type={"radio"}
+							id={`urgent`}
+							label={`Urgent`}
+						/>
+					</div>
+				</Form>
 
 				{listTodo.map((todo, index) => (
 					<TodoList
