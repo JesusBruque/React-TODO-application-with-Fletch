@@ -14,7 +14,9 @@ const TodoList = (props) => {
 				<li
 					className={
 						"list-group-item row " +
-						(props.important ? "bg-warning" : null)
+						(props.important == { important: true }
+							? "bg-warning"
+							: null)
 					}
 					onClick={() => props.delete(props.id)}>
 					{props.todo}

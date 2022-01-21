@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, InputGroup, FormControl, Form } from "react-bootstrap";
 
 //Imports components
@@ -54,14 +54,6 @@ const Home = () => {
 					/>
 				</InputGroup>
 
-				<div className="d-flex justify-content-center my-2">
-					<Button
-						onClick={handelClick}
-						className="col-4"
-						variant="primary">
-						New Task
-					</Button>{" "}
-				</div>
 				<Form>
 					<div className="mb-3">
 						<Form.Check
@@ -80,6 +72,15 @@ const Home = () => {
 					</div>
 				</Form>
 
+				<div className="d-flex justify-content-center my-2">
+					<Button
+						onClick={handelClick}
+						className="col-4"
+						variant="primary">
+						New Task
+					</Button>{" "}
+				</div>
+
 				{listTodo.map((todo, index) => (
 					<TodoList
 						key={index}
@@ -89,14 +90,17 @@ const Home = () => {
 					/>
 				))}
 			</div>
-
-			<div className="card-body">
-				<a href="#" className="card-link">
-					Card link
-				</a>
-				<a href="#" className="card-link">
-					Another link
-				</a>
+			<div>
+				<span className="badge bg-light text-dark me-2">
+					Total Tasks: {listTodo.length}
+				</span>
+				<span className="badge bg-warning me-2">
+					Important Tasks: {}
+				</span>
+				<span className="badge bg-danger me-2">Urgent Tasks: {}</span>
+				<span className="badge bg-success me-2">
+					Complete Tasks: {}
+				</span>
 			</div>
 		</div>
 	);
