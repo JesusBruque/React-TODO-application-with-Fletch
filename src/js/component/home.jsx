@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, InputGroup, FormControl, Form } from "react-bootstrap";
+import { getTodos } from "../../services/todo.js";
 
 //Imports components
 import TodoList from "./TodoList.jsx";
@@ -19,6 +20,10 @@ const Home = () => {
 		console.log(id);
 	};
 
+	const checkedTodo = (id) => {
+		console.log(id);
+	};
+
 	console.log({ newTodo });
 
 	const handelClick = () => {
@@ -29,9 +34,27 @@ const Home = () => {
 	console.log({ radio });
 
 	const important = (e) => {
-		const changeCheck = e.target.checked;
-		setRadio(changeCheck);
+		const changeImportance = e.target.checked;
+		setRadio(changeImportance);
 	};
+
+	const getAllTodos = () => {
+		getTodos()
+			.then((res) => {
+				return res.json();
+			})
+			.then((data) => {
+				console.log(data);
+				setLisTodo(data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
+	useEffect(() => {
+		getAllTodos();
+	}, []);
 
 	return (
 		<div className="card container d-flex justify-content-center col-6">
@@ -81,14 +104,19 @@ const Home = () => {
 					</Button>{" "}
 				</div>
 
-				{listTodo.map((todo, index) => (
-					<TodoList
-						key={index}
-						delete={deleteTodo}
-						id={index}
-						todo={todo}
-					/>
-				))}
+				{listTodo.map((todo, index) => {
+					console.log(todo);
+
+					return (
+						<TodoList
+							key={index}
+							delete={deleteTodo}
+							id={index}
+							todo={todo}
+							check={checkedTodo}
+						/>
+					);
+				})}
 			</div>
 			<div>
 				<span className="badge bg-light text-dark me-2">

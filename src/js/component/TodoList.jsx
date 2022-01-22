@@ -19,11 +19,12 @@ const TodoList = (props) => {
 							: null)
 					}
 					onClick={() => props.delete(props.id)}>
-					{props.todo}
+					{props.todo.label}
 
 					<Form.Check
 						className="checkbox"
 						onChange={(e) => setCheck(e.target.checked)}
+						onClick={() => props.check(props.todo.done)}
 						type={"checkbox"}
 						id={`done`}
 					/>
@@ -34,7 +35,7 @@ const TodoList = (props) => {
 };
 
 TodoList.propTypes = {
-	todo: PropTypes.string,
+	todo: PropTypes.object,
 	id: PropTypes.number,
 	delete: PropTypes.func,
 	important: PropTypes.bool,
