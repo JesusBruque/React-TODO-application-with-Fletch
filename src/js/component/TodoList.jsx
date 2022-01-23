@@ -11,23 +11,19 @@ const TodoList = (props) => {
 		<>
 			<ul className="list-group list-group-flush container">
 				<li className="list-group-item"></li>
-				<li
-					className={
-						"list-group-item row " +
-						(props.important == { important: true }
-							? "bg-warning"
-							: null)
-					}
-					onClick={() => props.delete(props.id)}>
+				<li className="list-group-item row">
 					{props.todo.label}
 
 					<Form.Check
 						className="checkbox"
-						onChange={(e) => setCheck(e.target.checked)}
-						onClick={() => props.check(props.todo.done)}
+						onChange={(e) =>
+							props.check(props.id, e.target.checked)
+						}
+						defaultChecked={props.todo.done}
 						type={"checkbox"}
 						id={`done`}
 					/>
+					<p onClick={() => props.delete(props.id)}>Borrar</p>
 				</li>
 			</ul>
 		</>
@@ -38,7 +34,7 @@ TodoList.propTypes = {
 	todo: PropTypes.object,
 	id: PropTypes.number,
 	delete: PropTypes.func,
-	important: PropTypes.bool,
+	check: PropTypes.func,
 };
 
 export default TodoList;

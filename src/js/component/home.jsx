@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Button, InputGroup, FormControl, Form } from "react-bootstrap";
-import { getTodos } from "../../services/todo.js";
+import { getTodos, putTodos } from "../../services/todo.js";
 
 //Imports components
 import TodoList from "./TodoList.jsx";
 
 //create your first component
 const Home = () => {
-	const [listTodo, setLisTodo] = useState([]);
-	const [newTodo, setNewTodo] = useState("");
+	const [listTodo, setListTodo] = useState([]);
+	const [newTodo, setNewTodo] = useState({
+		label: "",
+		done: false,
+	});
 	const [radio, setRadio] = useState({
 		important: false,
 		urgent: false,
@@ -18,20 +21,48 @@ const Home = () => {
 
 	const deleteTodo = (id) => {
 		console.log(id);
+		const newListTodo = [...listTodo];
+		newListTodo.splice(id, 1);
+		console.log(newListTodo);
+		putTodos(newListTodo)
+			.then((res) => {
+				getAllTodos();
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	};
 
-	const checkedTodo = (id) => {
+	const checkedTodo = (id, checked) => {
 		console.log(id);
+		const newListTodo = [...listTodo];
+		const todoChecked = newListTodo[id];
+		console.log(todoChecked);
+		todoChecked.done = checked;
+		console.log(newListTodo);
+		putTodos(newListTodo)
+			.then((res) => {
+				getAllTodos();
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	};
 
 	console.log({ newTodo });
 
 	const handelClick = () => {
 		const newListTodo = [...listTodo, newTodo];
-		setLisTodo(newListTodo);
+		putTodos(newListTodo)
+			.then((res) => {
+				getAllTodos();
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	};
 
-	console.log({ radio });
+	console.log({ listTodo });
 
 	const important = (e) => {
 		const changeImportance = e.target.checked;
@@ -45,7 +76,7 @@ const Home = () => {
 			})
 			.then((data) => {
 				console.log(data);
-				setLisTodo(data);
+				setListTodo(data);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -69,7 +100,9 @@ const Home = () => {
 				</div>
 				<InputGroup
 					id="new-todo"
-					onChange={(e) => setNewTodo(e.target.value)}
+					onChange={(e) =>
+						setNewTodo({ ...newTodo, label: e.target.value })
+					}
 					size="lg">
 					<FormControl
 						aria-label="Large"
