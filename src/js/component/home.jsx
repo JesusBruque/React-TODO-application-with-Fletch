@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, InputGroup, FormControl, Form } from "react-bootstrap";
+import { Button, InputGroup, FormControl } from "react-bootstrap";
 import { getTodos, putTodos } from "../../services/todo.js";
 
 //Imports components
@@ -12,18 +12,10 @@ const Home = () => {
 		label: "",
 		done: false,
 	});
-	const [radio, setRadio] = useState({
-		important: false,
-		urgent: false,
-	});
-
-	console.log({ listTodo });
 
 	const deleteTodo = (id) => {
-		console.log(id);
 		const newListTodo = [...listTodo];
 		newListTodo.splice(id, 1);
-		console.log(newListTodo);
 		putTodos(newListTodo)
 			.then((res) => {
 				getAllTodos();
@@ -34,12 +26,9 @@ const Home = () => {
 	};
 
 	const checkedTodo = (id, checked) => {
-		console.log(id);
 		const newListTodo = [...listTodo];
 		const todoChecked = newListTodo[id];
-		console.log(todoChecked);
 		todoChecked.done = checked;
-		console.log(newListTodo);
 		putTodos(newListTodo)
 			.then((res) => {
 				getAllTodos();
@@ -48,8 +37,6 @@ const Home = () => {
 				console.log(err);
 			});
 	};
-
-	console.log({ newTodo });
 
 	const handelClick = () => {
 		const newListTodo = [...listTodo, newTodo];
@@ -60,13 +47,6 @@ const Home = () => {
 			.catch((err) => {
 				console.log(err);
 			});
-	};
-
-	console.log({ listTodo });
-
-	const important = (e) => {
-		const changeImportance = e.target.checked;
-		setRadio(changeImportance);
 	};
 
 	const getAllTodos = () => {
@@ -110,24 +90,6 @@ const Home = () => {
 					/>
 				</InputGroup>
 
-				<Form>
-					<div className="mb-3">
-						<Form.Check
-							inline
-							onChange={important}
-							type={"radio"}
-							id={`important`}
-							label={`Important`}
-						/>
-						<Form.Check
-							inline
-							type={"radio"}
-							id={`urgent`}
-							label={`Urgent`}
-						/>
-					</div>
-				</Form>
-
 				<div className="d-flex justify-content-center my-2">
 					<Button
 						onClick={handelClick}
@@ -138,8 +100,6 @@ const Home = () => {
 				</div>
 
 				{listTodo.map((todo, index) => {
-					console.log(todo);
-
 					return (
 						<TodoList
 							key={index}
@@ -154,13 +114,6 @@ const Home = () => {
 			<div>
 				<span className="badge bg-light text-dark me-2">
 					Total Tasks: {listTodo.length}
-				</span>
-				<span className="badge bg-warning me-2">
-					Important Tasks: {}
-				</span>
-				<span className="badge bg-danger me-2">Urgent Tasks: {}</span>
-				<span className="badge bg-success me-2">
-					Complete Tasks: {}
 				</span>
 			</div>
 		</div>

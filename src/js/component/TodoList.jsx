@@ -2,20 +2,17 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Form } from "react-bootstrap";
 
-import "../../styles/index.css";
-
 const TodoList = (props) => {
-	const [check, setCheck] = useState(false);
-
 	return (
 		<>
 			<ul className="list-group list-group-flush container">
 				<li className="list-group-item"></li>
-				<li className="list-group-item row">
-					{props.todo.label}
-
+				<li className="list-group-item d-flex bd-highlight">
+					<div className="p-2 flex-grow-1 bd-highlight">
+						{props.todo.label}
+					</div>
 					<Form.Check
-						className="checkbox"
+						className="checkbox p-2 bd-highlight"
 						onChange={(e) =>
 							props.check(props.id, e.target.checked)
 						}
@@ -23,7 +20,9 @@ const TodoList = (props) => {
 						type={"checkbox"}
 						id={`done`}
 					/>
-					<p onClick={() => props.delete(props.id)}>Borrar</p>
+					<i
+						class="far fa-trash-alt p-2 bd-highlight my-1"
+						onClick={() => props.delete(props.id)}></i>
 				</li>
 			</ul>
 		</>
