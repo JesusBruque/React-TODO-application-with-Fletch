@@ -21,7 +21,7 @@ const TodoList = (props) => {
 						id={`done`}
 					/>
 					<i
-						class="far fa-trash-alt p-2 bd-highlight my-1"
+						className="far fa-trash-alt p-2 bd-highlight my-1"
 						onClick={() => props.delete(props.id)}></i>
 				</li>
 			</ul>

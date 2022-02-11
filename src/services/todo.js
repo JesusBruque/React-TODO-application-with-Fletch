@@ -1,19 +1,15 @@
+const URL = "https://assets.breatheco.de/apis/fake/todos/user/GuillermoSR";
+
 export const getTodos = () => {
-	return fetch(
-		"https://assets.breatheco.de/apis/fake/todos/user/GuillermoSR",
-		{ method: "GET" }
-	);
+	return fetch(URL);
 };
 
 export const putTodos = (data) => {
-	return fetch(
-		"https://assets.breatheco.de/apis/fake/todos/user/GuillermoSR",
-		{
-			method: "PUT",
-			body: JSON.stringify(data),
-			headers: {
-				"Content-Type": "application/json",
-			},
-		}
-	);
+	return fetch(URL, {
+		method: "PUT",
+		body: JSON.stringify(data),
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
 };
